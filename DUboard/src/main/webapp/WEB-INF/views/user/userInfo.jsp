@@ -35,10 +35,23 @@
 			</tr>
 		</table>
 		<button type="submit">회원수정</button>
+		<button type="button" id="deleteBtn">회원탈퇴</button>
 	</form>
-	<form action="userDelete.do" method="post">
+	<form action="userDelete.do" method="post" id="userDeleteForm">
 		<input type="hidden" name="id" value="${USER.id }">
-		<button type="submit">회원탈퇴</button>
 	</form>
 </body>
+<script type="text/javascript">
+	window.onload = function() {
+		var deleteBtn = document.getElementById("deleteBtn");
+		deleteBtn.onclick = function() {
+			if(confirm("회원 탈퇴를 진행하시겠습니까?")) {
+				document.getElementById("userDeleteForm").submit();
+			} else {
+				return;
+			}
+		}
+	}
+	
+</script>
 </html>

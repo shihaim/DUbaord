@@ -3,9 +3,8 @@
 <configuration>
 	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true"/>
-		<setting name="jdbcTypeForNull" value="NULL"/>
 	</settings>
 	<typeAliases>
-		<package name="com.hsw.du.user.domain"/>
+		<typeAlias alias="boardMap" type="com.hsw.du.board.domain.BoardVO"/>
 	</typeAliases>
 </configuration>

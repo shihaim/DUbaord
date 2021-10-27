@@ -8,7 +8,7 @@
 <title>회원가입</title>
 </head>
 <body>
-	<form action="signUp.do" method="post">
+	<form action="signUp.do" method="post" id="signUpForm">
 		<table>
 			<tr>
 				<th>아이디</th>
@@ -16,7 +16,11 @@
 			</tr>
 			<tr>
 				<th>비밀번호</th>
-				<td><input type="password" name="pwd" required></td>
+				<td><input type="password" id="pwdInput" name="pwd" required></td>
+			</tr>
+			<tr>
+				<th>비밀번호확인</th>
+				<td><input type="password" id="pwdInputCheck" required></td>
 			</tr>
 			<tr>
 				<th>이름</th>
@@ -31,7 +35,24 @@
 				<td><input type="text" name="email"></td>
 			</tr>
 		</table>
-		<button type="submit">회원가입</button>
+		<button type="button" id="signUpBtn">회원가입</button>
 	</form>
 </body>
+
+<script type="text/javascript">
+	window.onload = function() {
+			var signUpBtn = document.getElementById("signUpBtn");
+			
+			signUpBtn.onclick = function() {
+				var pwdInput = document.getElementById("pwdInput").value;
+				var pwdInputCheck = document.getElementById("pwdInputCheck").value;
+				
+				if(pwdInput == pwdInputCheck) {
+					document.getElementById("signUpForm").submit();
+				} else {
+					alert("비밀번호를 확인해주세요.");
+				}
+			}
+	}
+</script>
 </html>
