@@ -21,6 +21,25 @@ public class BoardDAOImpl implements BoardDAO {
 		return mybatis.selectList("BoardMapper.selectBoardList");
 	}
 	
+	@Override
+	public BoardVO selectBoard(long idx) {
+		// TODO Auto-generated method stub
+		return mybatis.selectOne("BoardMapper.selectBoard", idx);
+		
+	}
+
+	@Override
+	public void insertBoard(BoardVO board) {
+		// TODO Auto-generated method stub
+		mybatis.insert("BoardMapper.insertBoard", board);
+	}
+
+	@Override
+	public void updateBoard(BoardVO board) {
+		// TODO Auto-generated method stub
+		mybatis.update("BoardMapper.updateBoard", board);
+	}
+	
 	
 
 }

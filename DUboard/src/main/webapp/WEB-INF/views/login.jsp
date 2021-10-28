@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -15,19 +16,36 @@
 		<tr>
 			<th>번호</th>
 			<th>제목</th>
-			<th>글</th>
 			<th>글쓴이</th>
 			<th>작성날짜</th>
 		</tr>
 		<c:forEach items="${boardList }" var="item">
-			<tr>
+			<tr onclick="trClick(`${item.idx}`);">
 				<td><c:out value="${item.idx }"></c:out></td>
 				<td><c:out value="${item.title }"></c:out></td>
-				<td><c:out value="${item.content }"></c:out></td>
 				<td><c:out value="${item.writerName }"></c:out></td>
-				<td><c:out value="${item.registDate }"></c:out></td>
+				<td>
+					<c:choose>
+						<c:when test="${item.modifyDate != null}">
+							<fmt:parseDate value="${item.modifyDate }" pattern="yyyy-MM-dd'T'HH:mm:ss" var="date"></fmt:parseDate>
+							<fmt:formatDate value="${date }" pattern="yyyy-MM-dd HH:mm:ss"/>
+						</c:when>
+						<c:otherwise>
+							<fmt:parseDate value="${item.registDate }" pattern="yyyy-MM-dd'T'HH:mm:ss" var="date"></fmt:parseDate>
+							<fmt:formatDate value="${date }" pattern="yyyy-MM-dd HH:mm:ss"/>
+						</c:otherwise>
+					</c:choose>
+				</td>
 			</tr>
 		</c:forEach>
 	</table>
+	<button type="button" onclick="location.href='boardWritePage.do'">글쓰기</button>
 </body>
+<script type="text/javascript">
+	function trClick(idx) {
+		var url = "boardInfoPage=" + idx + ".do";
+		
+		location.href = url;
+	}
+</script>
 </html>

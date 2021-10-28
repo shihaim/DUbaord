@@ -15,6 +15,30 @@
 		<![CDATA[
 			SELECT B.*, U.name AS writer_name
 			FROM board B INNER JOIN user U ON B.writer_id = U.id
+			ORDER BY idx desc
 		]]>
 	</select>
+	
+	<select id="selectBoard" resultMap="BoardVO" parameterType="long">
+		<![CDATA[
+			SELECT B.idx, B.title, B.content, B.writer_id, B.regist_date, B.modify_date, U.name AS writer_name
+			FROM board B INNER JOIN user U ON B.writer_id = U.id
+			WHERE B.idx = #{idx}
+		]]>
+	</select>
+	
+	<insert id="insertBoard" parameterType="boardMap">
+		<![CDATA[
+			INSERT INTO board(title, content, writer_id)
+			VALUES(#{title}, #{content}, #{writerId})
+		]]>
+	</insert>
+	
+	<update id="updateBoard" parameterType="boardMap">
+		<![CDATA[
+			UPDATE board
+			SET title=#{title}, content=#{content}, modify_date=NOW()
+			WHERE idx = #{idx}
+		]]>
+	</update>
 </mapper>

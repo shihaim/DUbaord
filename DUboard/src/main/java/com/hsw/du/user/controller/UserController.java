@@ -15,30 +15,30 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping("signUp.do")
+	@RequestMapping("/signUp.do")
 	public String signUp(UserVO user) {
 		userService.insertUser(user);
 		
 		return "redirect:/";
 	}
 	
-	@RequestMapping("userModifyPage.do")
+	@RequestMapping("/userModifyPage.do")
 	public String userModifyPage() {
 		return "user/userInfo";
 	}
 	
-	@RequestMapping("userModify.do")
+	@RequestMapping("/userModify.do")
 	public String userModify(UserVO user) {
 		userService.updateUser(user);
 		return "login";
 	}
 	
-	@RequestMapping("userDelete.do")
+	@RequestMapping("/userDelete.do")
 	public String userDelete(String id) {
 		userService.deleteUser(id);
 		return "index";
 	}
-	@RequestMapping("logout.do")
+	@RequestMapping("/logout.do")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		
