@@ -6,5 +6,6 @@
 	</settings>
 	<typeAliases>
 		<typeAlias alias="boardMap" type="com.hsw.du.board.domain.BoardVO"/>
+		<typeAlias alias="replyMap" type="com.hsw.du.reply.domain.ReplyVO"/>
 	</typeAliases>
 </configuration>

@@ -38,7 +38,7 @@ public class MainController {
 			if(userService.loginProcess(request, user)) {
 				ModelAndView mav = new ModelAndView("login");
 				List<BoardVO> boardList = boardService.selectBoardList();
-				mav.addObject("boardList", boardList);
+				mav.addObject("BOARDLIST", boardList);
 				
 				return mav;
 			} else {
@@ -52,7 +52,7 @@ public class MainController {
 			//redirect는 명령이 들어오면 웹 브라우저에게 다른 페이지로 이동하라는 명령을 내리기 떄문에 사실상 새로운 주소로 보내진다고 봐야한다. 그러므로 재요청을 할 수 있도록 구현을 해줘야 함.
 			ModelAndView mav = new ModelAndView("login");
 			List<BoardVO> boardList = boardService.selectBoardList();
-			mav.addObject("boardList", boardList);
+			mav.addObject("BOARDLIST", boardList);
 			
 			return mav;
 		}

@@ -1,6 +1,8 @@
 package com.hsw.du.board.controller;
 
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hsw.du.board.domain.BoardVO;
 import com.hsw.du.board.service.BoardService;
+import com.hsw.du.reply.domain.ReplyVO;
+import com.hsw.du.reply.service.ReplyService;
 import com.hsw.du.user.domain.UserVO;
 
 @Controller
@@ -18,6 +22,9 @@ public class BoardController {
 	
 	@Autowired
 	private BoardService boardService;
+	
+	@Autowired
+	private ReplyService replyService;
 	
 	@RequestMapping("/boardWritePage.do")
 	public String boardWritePage() {
@@ -36,10 +43,13 @@ public class BoardController {
 		ModelAndView mav = new ModelAndView("board/boardInfo");
 		
 		BoardVO board = boardService.selectBoard(idx);
-		mav.addObject("board", board);
+		mav.addObject("BOARD", board);
 		
 		UserVO user = (UserVO) session.getAttribute("USER");
 		mav.addObject("USER", user);
+		
+		List<ReplyVO> reply = replyService.selectReplyList(idx);
+		mav.addObject("REPLY", reply);
 		
 		return mav;
 	}
@@ -48,7 +58,7 @@ public class BoardController {
 	public ModelAndView boardModifyPage(long idx) {
 		ModelAndView mav = new ModelAndView("board/boardModify");
 		BoardVO board = boardService.selectBoard(idx);
-		mav.addObject("board", board);
+		mav.addObject("BOARD", board);
 		
 		return mav;
 	}

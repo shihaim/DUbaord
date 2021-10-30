@@ -19,7 +19,7 @@
 			<th>글쓴이</th>
 			<th>작성날짜</th>
 		</tr>
-		<c:forEach items="${boardList }" var="item">
+		<c:forEach items="${BOARDLIST }" var="item">
 			<tr onclick="trClick(`${item.idx}`);">
 				<td><c:out value="${item.idx }"></c:out></td>
 				<td><c:out value="${item.title }"></c:out></td>

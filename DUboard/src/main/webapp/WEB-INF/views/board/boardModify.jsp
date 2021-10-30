@@ -9,15 +9,15 @@
 </head>
 <body>
 	<form action="boardModify.do" method="post">
-		<input type="hidden" name="idx" value="${board.idx }">
+		<input type="hidden" name="idx" value="${BOARD.idx }">
 		<table>
 			<tr>
 				<th>제목</th>
-				<td><input type="text" name="title" value="${board.title }" required></td>
+				<td><input type="text" name="title" value="${BOARD.title }" required></td>
 			</tr>
 			<tr>
 				<th>내용</th>
-				<td><textarea rows="20" cols="60" name="content" required><c:out value="${board.content }"></c:out></textarea></td>
+				<td><textarea rows="20" cols="60" name="content" required><c:out value="${BOARD.content }"></c:out></textarea></td>
 			</tr>
 		</table>
 		<button type="submit">수정</button>
