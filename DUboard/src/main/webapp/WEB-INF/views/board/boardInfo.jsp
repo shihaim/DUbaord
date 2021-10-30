@@ -36,12 +36,26 @@
 			<td colspan="3"><c:out value="${board.content }"></c:out></td>
 		</tr>
 	</table>
+	<form action="boardDelete.do" method="post" id="boardDeleteForm">
+		<input type="hidden" value="${board.idx }" name="idx">
+	</form>
 	<div>
-		<button type="button" onclick="location.href='boardModifyPage.do?idx=${board.idx}'">글수정</button>
-		<button type="button" id="deleteBtn">글삭제</button>
+		<c:if test="${board.writerId == USER.id }">
+			<button type="button" onclick="location.href='boardModifyPage.do?idx=${board.idx}'">글수정</button>
+			<button type="button" id="deleteBtn">글삭제</button>
+		</c:if>
 	</div>
 </body>
 <script type="text/javascript">
-	
+	window.onload = function() {
+		var deleteBtn = document.getElementById("deleteBtn");
+		deleteBtn.onclick = function() {
+			if(confirm("글 삭제하시겠습니까?")) {
+				document.getElementById("boardDeleteForm").submit();
+			} else {
+				return;
+			}
+		}
+	}
 </script>
 </html>

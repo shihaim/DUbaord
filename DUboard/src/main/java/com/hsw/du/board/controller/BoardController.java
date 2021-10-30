@@ -32,11 +32,14 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/boardInfoPage={idx}.do")
-	public ModelAndView boardInfoPage(@PathVariable("idx") long idx) {
+	public ModelAndView boardInfoPage(@PathVariable("idx") long idx, HttpSession session) {
 		ModelAndView mav = new ModelAndView("board/boardInfo");
 		
 		BoardVO board = boardService.selectBoard(idx);
 		mav.addObject("board", board);
+		
+		UserVO user = (UserVO) session.getAttribute("USER");
+		mav.addObject("USER", user);
 		
 		return mav;
 	}
@@ -53,6 +56,13 @@ public class BoardController {
 	@RequestMapping("/boardModify.do")
 	public String boardModify(BoardVO board, HttpSession session) {
 		boardService.updateBoard(board, session);
+		
+		return "redirect:/login.do";
+	}
+	
+	@RequestMapping("/boardDelete.do")
+	public String boardDelete(long idx) {
+		boardService.deleteBoard(idx);
 		
 		return "redirect:/login.do";
 	}

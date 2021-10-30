@@ -41,4 +41,11 @@
 			WHERE idx = #{idx}
 		]]>
 	</update>
+	
+	<delete id="deleteBoard" parameterType="long">
+		<![CDATA[
+			DELETE FROM board 
+			WHERE idx = #{idx}
+		]]>
+	</delete>
 </mapper>

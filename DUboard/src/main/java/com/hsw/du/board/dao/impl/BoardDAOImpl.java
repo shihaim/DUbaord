@@ -39,6 +39,12 @@ public class BoardDAOImpl implements BoardDAO {
 		// TODO Auto-generated method stub
 		mybatis.update("BoardMapper.updateBoard", board);
 	}
+
+	@Override
+	public void deleteBoard(long idx) {
+		// TODO Auto-generated method stub
+		mybatis.delete("BoardMapper.deleteBoard", idx);
+	}
 	
 	
 
