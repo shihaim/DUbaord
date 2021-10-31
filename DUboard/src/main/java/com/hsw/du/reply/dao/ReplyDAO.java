@@ -8,4 +8,8 @@ public interface ReplyDAO {
 	public List<ReplyVO> selectReplyList(long boardIdx);
 	
 	public void insertReply(ReplyVO reply);
+	
+	public void updateReply(ReplyVO idx);
+	
+	public void deleteReply(long idx);
 }

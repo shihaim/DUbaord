@@ -23,4 +23,18 @@ public class ReplyController {
 		return "redirect:/boardInfoPage=" + Long.toString(reply.getBoardIdx()) + ".do";
 	}
 	
+	@RequestMapping("replyModify.do")
+	public String replyModify(ReplyVO reply) {
+		replyService.updateReply(reply);
+		
+		return "redirect:/boardInfoPage=" + Long.toString(reply.getBoardIdx()) + ".do";
+	}
+	
+	@RequestMapping("replyDelete.do")
+	public String replyDelete(ReplyVO reply) {
+		replyService.deleteReply(reply.getIdx());
+		
+		return "redirect:/boardInfoPage=" + Long.toString(reply.getBoardIdx()) + ".do";
+	}
+	
 }

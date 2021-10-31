@@ -62,14 +62,16 @@
 					</c:choose>
 					<c:if test="${item.writerId == USER.id }">
 						<button type="button" onclick="replyModify(${item.idx});">댓글수정</button>
-						<button type="button" id="replyDelete">댓글삭제</button>
+						<button type="button" onclick="replyDelete(${item.idx}, ${item.boardIdx});">댓글삭제</button>
 					</c:if>
-					<form action="replyModfiy.do" method="post">
+					<form action="replyModify.do" method="post">
+						<!-- boardIdx를 안 넣으면 매핑할 떄 reuturn 값이 boardIdx 0으로 인식돼서 돌아가지 못함 -->
+						<input type="hidden" name="boardIdx" value="${item.boardIdx }">
 						<input type="hidden" name="idx" value="${item.idx }">
-						<input type="hidden" name="content" id="replyInput_${item.idx }" placeholder="댓글 수정">
+						<input type="hidden" name="content" id="replyInput_${item.idx }" placeholder="댓글 수정" required>
 						<button type="submit" id="modifyBtn_${item.idx }" style="display: none;">수정</button>
 						<button type="button" id="cancel_${item.idx }" style="display: none;">취소</button>
-					</form>	
+					</form>
 				</td>
 			</tr>
 		</c:forEach>
@@ -101,6 +103,25 @@
 		}
 	}
 	
+	function post(path, params) {
+		const form = document.createElement("form");
+		form.method = "post";
+		form.action = path;
+		
+		for(const key in params) {
+			if(params.hasOwnProperty(key)) {
+				const hiddenField = document.createElement("input");
+				hiddenField.type = "hidden";
+				hiddenField.name = key;
+				hiddenField.value = params[key];
+				
+				form.appendChild(hiddenField);
+			}
+		}
+		document.body.appendChild(form);
+		form.submit();
+	}
+	
 	function replyModify(idx) {
 		console.log(idx);
 		var replyInput = document.getElementById("replyInput_" + idx);
@@ -115,6 +136,20 @@
 			replyInput.type = "hidden";
 			modifyBtn.style.display = "none";
 			cancel.style.display = "none";
+		}
+	}
+	
+	function replyDelete(idx, boardIdx) {
+		console.log(idx);
+		if(confirm("댓글을 삭제하시겠습니까?")) {
+			var path = "replyDelete.do";
+			var params = {
+					"idx" : idx,
+					"boardIdx" : boardIdx
+			};
+			post(path, params);
+		} else {
+			return;
 		}
 	}
 </script>

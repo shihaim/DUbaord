@@ -10,4 +10,8 @@ public interface ReplyService {
 	public List<ReplyVO> selectReplyList(long boardIdx);
 	
 	public void insertReply(ReplyVO reply, HttpSession session);
+	
+	public void updateReply(ReplyVO idx);
+	
+	public void deleteReply(long idx);
 }

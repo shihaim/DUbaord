@@ -34,4 +34,16 @@ public class ReplyServiceImpl implements ReplyService {
 		replyDAO.insertReply(reply);
 	}
 
+	@Override
+	public void updateReply(ReplyVO idx) {
+		// TODO Auto-generated method stub
+		replyDAO.updateReply(idx);
+	}
+
+	@Override
+	public void deleteReply(long idx) {
+		// TODO Auto-generated method stub
+		replyDAO.deleteReply(idx);
+	}
+
 }

@@ -27,4 +27,16 @@ public class ReplyDAOImpl implements ReplyDAO {
 		mybatis.insert("ReplyMapper.insertReply", reply);
 	}
 
+	@Override
+	public void updateReply(ReplyVO idx) {
+		// TODO Auto-generated method stub
+		mybatis.update("ReplyMapper.updateReply", idx);
+	}
+
+	@Override
+	public void deleteReply(long idx) {
+		// TODO Auto-generated method stub
+		mybatis.delete("ReplyMapper.deleteReply", idx);
+	}
+
 }

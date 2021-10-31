@@ -25,4 +25,19 @@
 			VALUES(#{boardIdx}, #{content}, #{writerId})
 		]]>
 	</insert>
+	
+	<update id="updateReply" parameterType="replyMap">
+		<![CDATA[
+			UPDATE reply
+			SET content = #{content}
+			WHERE idx = #{idx}
+		]]>
+	</update>
+	
+	<delete id="deleteReply" parameterType="long">
+		<![CDATA[
+			DELETE FROM reply
+			WHERE idx = #{idx}
+		]]>
+	</delete>
 </mapper>
