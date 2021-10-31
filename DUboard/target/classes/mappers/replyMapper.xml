@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ReplyMapper">
+	<resultMap type="replyMap" id="ReplyVO">
+		<id property="idx" column="idx"/>
+		<result property="boardIdx" column="board_idx"/>
+		<result property="content" column="content"/>
+		<result property="writerId" column="writer_id"/>
+		<result property="writerName" column="writer_name"/>
+		<result property="registDate" column="regist_date"/>
+		<result property="modifyDate" column="modify_date"/>
+	</resultMap>
+	<select id="selectReplyList" resultMap="ReplyVO" parameterType="long">
+		<![CDATA[
+			SELECT R.*, U.name AS writer_name
+			FROM reply R INNER JOIN user U ON R.writer_id = U.id
+			WHERE R.board_idx = #{boardIdx}
+			ORDER BY R.idx desc
+		]]>
+	</select>
+	
+	<insert id="insertReply" parameterType="replyMap">
+		<![CDATA[
+			INSERT INTO reply(board_idx, content, writer_id)
+			VALUES(#{boardIdx}, #{content}, #{writerId})
+		]]>
+	</insert>
+	
+	<update id="updateReply" parameterType="replyMap">
+		<![CDATA[
+			UPDATE reply
+			SET content = #{content}
+			WHERE idx = #{idx}
+		]]>
+	</update>
+	
+	<delete id="deleteReply" parameterType="long">
+		<![CDATA[
+			DELETE FROM reply
+			WHERE idx = #{idx}
+		]]>
+	</delete>
+</mapper>
