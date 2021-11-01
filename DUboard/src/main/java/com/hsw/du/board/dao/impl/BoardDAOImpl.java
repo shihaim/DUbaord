@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.hsw.du.board.dao.BoardDAO;
+import com.hsw.du.board.domain.BoardAttFileVO;
 import com.hsw.du.board.domain.BoardVO;
 
 @Repository
@@ -44,6 +45,24 @@ public class BoardDAOImpl implements BoardDAO {
 	public void deleteBoard(long idx) {
 		// TODO Auto-generated method stub
 		mybatis.delete("BoardMapper.deleteBoard", idx);
+	}
+
+	@Override
+	public void insertBoardAttFile(BoardAttFileVO attFileVO) {
+		// TODO Auto-generated method stub
+		mybatis.insert("BoardMapper.insertBoardAttFile", attFileVO);
+	}
+
+	@Override
+	public BoardAttFileVO selectBoardAttFile(BoardAttFileVO criteria) {
+		// TODO Auto-generated method stub
+		return mybatis.selectOne("BoardMapper.selectBoardAttFile", criteria);
+	}
+
+	@Override
+	public void deleteBoardAttFile(BoardAttFileVO criteria) {
+		// TODO Auto-generated method stub
+		mybatis.delete("BoardMapper.deleteBoardAttFile", criteria);
 	}
 	
 	

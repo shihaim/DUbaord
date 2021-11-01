@@ -35,11 +35,17 @@
 			<th>내용</th>
 			<td colspan="3"><c:out value="${BOARD.content }"></c:out></td>
 		</tr>
+		<tr>
+			<th>첨부파일</th>
+			<td colspan="4">
+				<a href="#" onclick="downloadFile(); return false;">${BOARD.attFilename }</a>
+			</td>
+		</tr>
 		<c:if test="${BOARD.writerId == USER.id }">
 			<tr>
 				<td>
 					<button type="button" onclick="location.href='boardModifyPage.do?idx=${BOARD.idx}'">글수정</button>
-					<button type="button" id="deleteBtn">글삭제</button>
+					<button type="button" onclick="boardDelete(${BOARD.idx}, ${BOARD.attIdx });">글삭제</button>
 				</td>
 			</tr>
 		</c:if>
@@ -90,16 +96,27 @@
 	<form action="boardDelete.do" method="post" id="boardDeleteForm">
 		<input type="hidden" value="${BOARD.idx }" name="idx">
 	</form>
+	<form id="fileDownload" action="download/boardAttFile.do" method="post">
+		<input type="hidden" name="boardIdx" value="${BOARD.idx }">
+		<input type="hidden" name="idx" value="${BOARD.attIdx }">
+	</form>
+	<p>123</p>
+	<c:out value="${BOARD.storePath }"></c:out>
+	<br>
+	<c:out value="${BOARD.baseFilename }"></c:out>
 </body>
 <script type="text/javascript">
-	window.onload = function() {
-		var deleteBtn = document.getElementById("deleteBtn");
-		deleteBtn.onclick = function() {
-			if(confirm("글 삭제하시겠습니까?")) {
-				document.getElementById("boardDeleteForm").submit();
-			} else {
-				return;
-			}
+	function boardDelete(idx, attIdx) {
+		console.log(idx);
+		if(confirm("게시글을 삭제하겠습니까?")) {
+			var path = "boardDelete.do";
+			var params = {
+					"idx": idx,
+					"attIdx": attIdx
+			};
+			post(path, params);
+		} else {
+			return;
 		}
 	}
 	
@@ -150,6 +167,14 @@
 			post(path, params);
 		} else {
 			return;
+		}
+	}
+	
+	function downloadFile() {
+		var inputIdx = document.querySelector('#fileDownload > input[name="idx"]');
+		
+		if(inputIdx.value) {
+			document.forms["fileDownload"].submit();
 		}
 	}
 </script>

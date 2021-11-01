@@ -9,6 +9,19 @@
 		<result property="writerName" column="writer_name"/>
 		<result property="registDate" column="regist_date"/>
 		<result property="modifyDate" column="modify_date"/>
+		<result property="attIdx" column="att_idx"/>
+		<result property="attFilename" column="att_filename"/>
+		<result property="storePath" column="store_path"/>
+		<result property="baseFilename" column="base_filename"/>
+	</resultMap>
+	
+	<resultMap type="attFileMap" id="BoardAttFileVO">
+		<id property="idx" column="idx"/>
+		<result property="boardIdx" column="board_idx"/>
+		<result property="filePath" column="file_path"/>
+		<result property="oldFilename" column="old_filename"/>
+		<result property="newFilename" column="new_filename"/>
+		<result property="fileSize" column="file_size"/>
 	</resultMap>
 	
 	<select id="selectBoardList" resultMap="BoardVO">
@@ -21,9 +34,30 @@
 	
 	<select id="selectBoard" resultMap="BoardVO" parameterType="long">
 		<![CDATA[
-			SELECT B.idx, B.title, B.content, B.writer_id, B.regist_date, B.modify_date, U.name AS writer_name
-			FROM board B INNER JOIN user U ON B.writer_id = U.id
-			WHERE B.idx = #{idx}
+			SELECT 
+				B.idx, 
+				B.title, 
+				B.content, 
+				B.writer_id, 
+				B.regist_date, 
+				B.modify_date, 
+				U.name AS writer_name,
+				F.idx AS att_idx,
+				F.old_filename AS att_filename,
+				F.file_path AS store_path,
+				F.new_filename AS base_filename
+			FROM 
+				board B 
+			INNER JOIN 
+				user U 
+			ON 
+				B.writer_id = U.id
+			LEFT OUTER JOIN
+				board_att_file F
+			ON
+				B.idx = F.board_idx
+			WHERE 
+				B.idx = #{idx}
 		]]>
 	</select>
 	
@@ -32,6 +66,10 @@
 			INSERT INTO board(title, content, writer_id)
 			VALUES(#{title}, #{content}, #{writerId})
 		]]>
+		
+		<selectKey keyProperty="idx" order="AFTER" resultType="_int">
+			SELECT LAST_INSERT_ID();
+		</selectKey>
 	</insert>
 	
 	<update id="updateBoard" parameterType="boardMap">
@@ -46,6 +84,30 @@
 		<![CDATA[
 			DELETE FROM board 
 			WHERE idx = #{idx}
+		]]>
+	</delete>
+	
+	<!-- attFile -->
+	
+	<select id="selectBoardAttFile" parameterType="attFileMap" resultMap="BoardAttFileVO">
+		<![CDATA[
+			SELECT idx, board_idx, file_path, old_filename, new_filename, file_size
+			FROM board_att_file
+			WHERE idx = #{idx} AND board_idx = #{boardIdx};
+		]]>
+	</select>
+	
+	<insert id="insertBoardAttFile" parameterType="attFileMap">
+		<![CDATA[
+			INSERT INTO board_att_file(board_idx, file_path, old_filename, new_filename, file_size, writer_id)
+			VALUES(#{boardIdx}, #{filePath}, #{oldFilename}, #{newFilename}, #{fileSize}, #{writerId})
+		]]>
+	</insert>
+	
+	<delete id="deleteBoardAttFile" parameterType="attFileMap">
+		<![CDATA[
+			DELETE FROM board_att_file
+			WHERE idx = #{idx} AND board_idx = #{boardIdx};
 		]]>
 	</delete>
 </mapper>
