@@ -4,10 +4,11 @@ import java.util.List;
 
 import com.hsw.du.board.domain.BoardAttFileVO;
 import com.hsw.du.board.domain.BoardVO;
+import com.hsw.du.common.Pagination;
 
 public interface BoardDAO {
 	
-	public List<BoardVO> selectBoardList();
+	public List<BoardVO> selectBoardList(Pagination pagination);
 	
 	public BoardVO selectBoard(long idx);
 	
@@ -22,6 +23,8 @@ public interface BoardDAO {
 	public BoardAttFileVO selectBoardAttFile(BoardAttFileVO criteria);
 	
 	public void deleteBoardAttFile(BoardAttFileVO criteria);
+	
+	public int selectBoardListCnt();
 }
 
 

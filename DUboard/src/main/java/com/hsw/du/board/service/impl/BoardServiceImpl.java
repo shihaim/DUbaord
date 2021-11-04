@@ -15,6 +15,7 @@ import com.hsw.du.board.dao.BoardDAO;
 import com.hsw.du.board.domain.BoardAttFileVO;
 import com.hsw.du.board.domain.BoardVO;
 import com.hsw.du.board.service.BoardService;
+import com.hsw.du.common.Pagination;
 import com.hsw.du.user.domain.UserVO;
 
 @Service
@@ -24,9 +25,9 @@ public class BoardServiceImpl implements BoardService {
 	private BoardDAO boardDAO;
 
 	@Override
-	public List<BoardVO> selectBoardList() {
+	public List<BoardVO> selectBoardList(Pagination pagination) {
 		// TODO Auto-generated method stub
-		return boardDAO.selectBoardList();
+		return boardDAO.selectBoardList(pagination);
 	}
 	
 	@Override
@@ -154,6 +155,12 @@ public class BoardServiceImpl implements BoardService {
 		}
 		
 		boardDAO.deleteBoardAttFile(criteria);
+	}
+
+	@Override
+	public int selectBoardListCnt() {
+		// TODO Auto-generated method stub
+		return boardDAO.selectBoardListCnt();
 	}
 	
 

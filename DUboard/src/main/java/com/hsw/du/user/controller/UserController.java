@@ -30,7 +30,7 @@ public class UserController {
 	@RequestMapping("/userModify.do")
 	public String userModify(UserVO user) {
 		userService.updateUser(user);
-		return "login";
+		return "redirect:/login.do";
 	}
 	
 	@RequestMapping("/userDelete.do")

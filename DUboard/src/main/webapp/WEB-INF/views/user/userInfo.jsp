@@ -6,20 +6,22 @@
 <head>
 <meta charset="UTF-8">
 <title>회원 정보</title>
-<meta name="viewport" content="initial-scale=1.0, width=device-width">
-<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"/>
-<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 </head>
+<!-- 합쳐지고 최소화된 최신 CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+<!-- 부가적인 테마 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <body>
-<div data-role="page" id="page2">
- <div data-role="header" data-position="fixed" data-theme="b">
-     <h1>회원정보</h1>
-  <a href="#" onclick="history.back();" data-icon="home" data-iconpos="notext" class="ui-btn-right">Home</a>
- </div>
-<div data-role="content">
+
+     <h2 class="text-center">회원정보</h2>
+
+
    <form action="userModify.do" method="post">
-	<table>
+	<table class="table table-bordered">
 		<tr>
 			<th>아이디</th>
 			<td>
@@ -44,14 +46,11 @@
 			<td><input type="text" name="email" value="${USER.email }"></td>
 		</tr>
 	</table>
-	<button type="submit">회원수정</button>
-	<button type="button" id="deleteBtn">회원탈퇴</button>
+	<button type="submit" class="btn btn-primary">회원수정</button>
+	<button type="button" id="deleteBtn" class="btn btn-primary">회원탈퇴</button>
 </form>
-</div>
-<div data-role="footer" data-position="fixed" data-theme="b">
-    <h4></h4>
-</div>
-</div>
+
+
   
   
 	

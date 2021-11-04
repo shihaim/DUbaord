@@ -17,18 +17,15 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-<div data-role="header" data-position="fixed" data-theme="b">
-              
-              <h2 class="text-center">게시판</h2>
-              <div data-role="navbar">
-                <p>환영합니다! <c:out value="${USER.name }"></c:out></p>
+              <div>
+              	<h2 class="text-center">게시판</h2>
+              	환영합니다! [<c:out value="${USER.name }"></c:out>]님
                 <button type="button" class="btn btn-primary" onclick="location.href='userModifyPage.do'">회원정보</button>
                 <button type="button" class="btn btn-primary" onclick="location.href='logout.do'">로그아웃</button>
               </div>
-          </div>
-          <div data-role="content">
-
-                  <table class="table table-bordered table-hover">
+              
+              <div>
+              	<table class="table table-bordered table-hover">
                         <thead>
                             <tr>
                                 <th>번호</th>
@@ -60,12 +57,29 @@
                         </tbody>
                     </table>
 
-              <button type="button" class="btn btn-primary" onclick="location.href='boardWritePage.do'">글쓰기</button>
-          </div>
+              	<button type="button" class="btn btn-primary" onclick="location.href='boardWritePage.do'">글쓰기</button>
+              </div>
 
-          <div data-role="footer" data-position="fixed" data-theme="b">
               
-          </div>
+          
+          
+	<div id="paginationBox">
+		<ul class="pagination">
+			<c:if test="${PAGINATION.prev }">
+				<li class="page-item"><a class="page-link" href="#" onclick="fn_prev('${PAGINATION.page}', '${PAGINATION.range }', '${PAGINATION.rangeSize }')">이전</a></li>
+			</c:if>
+			
+			<c:forEach begin="${PAGINATION.startPage }" end="${PAGINATION.endPage }" var="idx">
+				<li class="page-item <c:out value="${PAGINATION.page == idx ? 'active' : ''}"></c:out>"><a class="page-link" href="#" onclick="fn_pagination('${idx}', '${PAGINATION.range }', '${PAGINATION.rangeSize }')">${idx }</a></li>
+			</c:forEach>
+			
+			<c:if test="${PAGINATION.next }">
+				<li class="page-item"><a class="page-link" href="#" onclick="fn_next('${PAGINATION.page}', '${PAGINATION.range }', '${PAGINATION.rangeSize }')">다음</a></li>
+			</c:if>
+		</ul>
+	</div>
+
+
 </body>
 
 <script type="text/javascript">
@@ -75,20 +89,39 @@
 		location.href = url;
 	}
 	
-	 $(function() {
-         // tr 태그에 마우스를 올릴때
-         $('table tbody tr').mouseover(function() {
-             $(this).children().css({
-                 'backgroundColor': '#DCDCDC',
-                 'cursor': 'pointer'
-             });
-         }).mouseout(function() {
-             $(this).children().css({
-                 'backgroundColor': '#FFFFFF',
-                 'cursor': 'default'
-             });
-         });
-
-     });
+	 
+	// 이전 버튼 이벤트
+	function fn_prev(page, range, rangeSize) {
+		var page = ((range - 2) * rangeSize) + 1;
+		var range = range - 1;
+		
+		var url = "login.do";
+		url = url + "?page=" + page;
+		url = url + "&range=" + range;
+		
+		location.href = url;
+	}
+	
+	// 페이지 번호 클릭 이벤트
+	function fn_pagination(page, range, rangeSize) {
+		var url = "login.do";
+		
+		url = url + "?page=" + page;
+		url = url + "&range=" + range;
+		
+		location.href = url;
+	}
+	
+	// 다음 버튼 이벤트
+	function fn_next(page, range, rangeSize) {
+		var page = parseInt(range * rangeSize) + 1;
+		var range = parseInt(range) + 1;
+		
+		var url = "login.do";
+		url = url + "?page=" + page;
+		url = url + "&range=" + range;
+		
+		location.href = url;
+	}
 </script>
 </html>

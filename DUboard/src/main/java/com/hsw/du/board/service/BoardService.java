@@ -6,10 +6,11 @@ import javax.servlet.http.HttpSession;
 
 import com.hsw.du.board.domain.BoardAttFileVO;
 import com.hsw.du.board.domain.BoardVO;
+import com.hsw.du.common.Pagination;
 
 public interface BoardService {
 	
-	public List<BoardVO> selectBoardList();
+	public List<BoardVO> selectBoardList(Pagination pagination);
 	
 	public BoardVO selectBoard(long idx);
 	
@@ -22,5 +23,7 @@ public interface BoardService {
 	public BoardAttFileVO findBoardAttFile(BoardAttFileVO criteria);
 	
 	public void deleteBoardAttFile(BoardAttFileVO criteria) throws Exception;
+	
+	public int selectBoardListCnt();
 
 }

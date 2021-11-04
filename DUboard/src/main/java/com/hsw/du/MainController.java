@@ -11,10 +11,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hsw.du.board.domain.BoardVO;
 import com.hsw.du.board.service.BoardService;
+import com.hsw.du.common.Pagination;
 import com.hsw.du.user.domain.UserVO;
 import com.hsw.du.user.service.UserService;
 
@@ -33,11 +35,24 @@ public class MainController {
 	}
 	
 	@RequestMapping("/login.do")
-	public ModelAndView login(HttpServletRequest request, HttpServletResponse response, HttpSession session, UserVO user) throws IOException{
+	public ModelAndView login(
+			HttpServletRequest request, 
+			HttpServletResponse response, 
+			HttpSession session, 
+			UserVO user,
+			@RequestParam(required = false, defaultValue = "1") int page,
+			@RequestParam(required = false, defaultValue = "1") int range
+	) throws IOException{
 		if(session.getAttribute("USER") == null) {
 			if(userService.loginProcess(request, user)) {
 				ModelAndView mav = new ModelAndView("login");
-				List<BoardVO> boardList = boardService.selectBoardList();
+				
+				int listCnt = boardService.selectBoardListCnt();
+				Pagination pagination = new Pagination();
+				pagination.pageInfo(page, range, listCnt);
+				mav.addObject("PAGINATION", pagination);
+				
+				List<BoardVO> boardList = boardService.selectBoardList(pagination);
 				mav.addObject("BOARDLIST", boardList);
 				
 				return mav;
@@ -51,8 +66,15 @@ public class MainController {
 		} else {
 			//redirect는 명령이 들어오면 웹 브라우저에게 다른 페이지로 이동하라는 명령을 내리기 떄문에 사실상 새로운 주소로 보내진다고 봐야한다. 그러므로 재요청을 할 수 있도록 구현을 해줘야 함.
 			ModelAndView mav = new ModelAndView("login");
-			List<BoardVO> boardList = boardService.selectBoardList();
+			
+			int listCnt = boardService.selectBoardListCnt();
+			Pagination pagination = new Pagination();
+			pagination.pageInfo(page, range, listCnt);
+			mav.addObject("PAGINATION", pagination);
+			
+			List<BoardVO> boardList = boardService.selectBoardList(pagination);
 			mav.addObject("BOARDLIST", boardList);
+			
 			
 			return mav;
 		}

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.hsw.du.board.dao.BoardDAO;
 import com.hsw.du.board.domain.BoardAttFileVO;
 import com.hsw.du.board.domain.BoardVO;
+import com.hsw.du.common.Pagination;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO {
@@ -17,9 +18,9 @@ public class BoardDAOImpl implements BoardDAO {
 	private SqlSessionTemplate mybatis;
 
 	@Override
-	public List<BoardVO> selectBoardList() {
+	public List<BoardVO> selectBoardList(Pagination pagination) {
 		// TODO Auto-generated method stub
-		return mybatis.selectList("BoardMapper.selectBoardList");
+		return mybatis.selectList("BoardMapper.selectBoardList", pagination);
 	}
 	
 	@Override
@@ -63,6 +64,12 @@ public class BoardDAOImpl implements BoardDAO {
 	public void deleteBoardAttFile(BoardAttFileVO criteria) {
 		// TODO Auto-generated method stub
 		mybatis.delete("BoardMapper.deleteBoardAttFile", criteria);
+	}
+
+	@Override
+	public int selectBoardListCnt() {
+		// TODO Auto-generated method stub
+		return mybatis.selectOne("BoardMapper.selectBoardListCnt");
 	}
 	
 	

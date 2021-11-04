@@ -63,7 +63,6 @@
 				</c:if>
 		</table>
 		
-		<hr>
 		<p style="font-size: 20px; text-align: center;"><strong>댓글</strong></p>
 		
 		<table class="table table-bordered">
@@ -116,7 +115,7 @@
 					</td>
 				</tr>
 		</table>
-<button type="button" onclick="history.back();" class="btn btn-primary">이전</button>
+<button type="button" onclick="location.href='login.do'" class="btn btn-primary">이전</button>
 
 
 
