@@ -24,20 +24,32 @@
 		<result property="fileSize" column="file_size"/>
 	</resultMap>
 	
-	<select id="selectBoardList" resultMap="BoardVO">
+	<select id="selectBoardList" parameterType="HashMap" resultMap="BoardVO">
 		<![CDATA[
 			SELECT B.*, U.name AS writer_name
 			FROM board B INNER JOIN user U ON B.writer_id = U.id
+		]]>
+		<where>
+			<if test="title != ''">
+				B.title LIKE CONCAT('%', #{title}, '%')
+			</if>
+		</where>
+		<![CDATA[
 			ORDER BY idx desc
 			LIMIT #{startList}, #{listSize}
 		]]>
 	</select>
 	
-	<select id="selectBoardListCnt" resultType="int">
+	<select id="selectBoardListCnt" parameterType="String" resultType="int">
 		<![CDATA[
 			SELECT COUNT(*)
 			FROM board
 		]]>
+		<where>
+			<if test="value != ''">
+				title LIKE CONCAT('%', #{title}, '%')
+			</if>
+		</where>
 	</select>
 	
 	<select id="selectBoard" resultMap="BoardVO" parameterType="long">

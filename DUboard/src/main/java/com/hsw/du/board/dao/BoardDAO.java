@@ -1,5 +1,6 @@
 package com.hsw.du.board.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.hsw.du.board.domain.BoardAttFileVO;
@@ -8,7 +9,7 @@ import com.hsw.du.common.Pagination;
 
 public interface BoardDAO {
 	
-	public List<BoardVO> selectBoardList(Pagination pagination);
+	public List<BoardVO> selectBoardList(HashMap<String, Object> map);
 	
 	public BoardVO selectBoard(long idx);
 	
@@ -24,7 +25,7 @@ public interface BoardDAO {
 	
 	public void deleteBoardAttFile(BoardAttFileVO criteria);
 	
-	public int selectBoardListCnt();
+	public int selectBoardListCnt(String title);
 }
 
 

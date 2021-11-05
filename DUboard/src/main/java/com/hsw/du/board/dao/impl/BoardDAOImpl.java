@@ -1,5 +1,6 @@
 package com.hsw.du.board.dao.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -18,9 +19,9 @@ public class BoardDAOImpl implements BoardDAO {
 	private SqlSessionTemplate mybatis;
 
 	@Override
-	public List<BoardVO> selectBoardList(Pagination pagination) {
+	public List<BoardVO> selectBoardList(HashMap<String, Object> map) {
 		// TODO Auto-generated method stub
-		return mybatis.selectList("BoardMapper.selectBoardList", pagination);
+		return mybatis.selectList("BoardMapper.selectBoardList", map);
 	}
 	
 	@Override
@@ -67,9 +68,9 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public int selectBoardListCnt() {
+	public int selectBoardListCnt(String title) {
 		// TODO Auto-generated method stub
-		return mybatis.selectOne("BoardMapper.selectBoardListCnt");
+		return mybatis.selectOne("BoardMapper.selectBoardListCnt", title);
 	}
 	
 	

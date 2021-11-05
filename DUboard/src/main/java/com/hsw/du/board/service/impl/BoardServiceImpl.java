@@ -2,6 +2,7 @@ package com.hsw.du.board.service.impl;
 
 import java.io.File;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -25,9 +26,15 @@ public class BoardServiceImpl implements BoardService {
 	private BoardDAO boardDAO;
 
 	@Override
-	public List<BoardVO> selectBoardList(Pagination pagination) {
+	public List<BoardVO> selectBoardList(Pagination pagination, String title) {
 		// TODO Auto-generated method stub
-		return boardDAO.selectBoardList(pagination);
+		HashMap<String, Object> map = new HashMap<>();
+		
+		map.put("startList", pagination.getStartList());
+		map.put("listSize", pagination.getListSize());
+		map.put("title", "%" + title + "%");
+		
+		return boardDAO.selectBoardList(map);
 	}
 	
 	@Override
@@ -158,9 +165,10 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int selectBoardListCnt() {
+	public int selectBoardListCnt(String title) {
 		// TODO Auto-generated method stub
-		return boardDAO.selectBoardListCnt();
+		title = "%" + title + "%";
+		return boardDAO.selectBoardListCnt(title);
 	}
 	
 

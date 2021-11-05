@@ -15,6 +15,7 @@
 
 <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
               <div>
@@ -25,7 +26,17 @@
               </div>
               
               <div>
-              	<table class="table table-bordered table-hover">
+              	<table style="margin-left: auto; margin-right: auto;">
+              		<tr>
+              			<th><span class="material-icons">search</span></th>
+              			<td><input type="text" id="searchTitle" placeholder="검색할 제목을 입력하세요" value="<c:out value='${title }'></c:out>"/></td>
+              			<td><button type="button" id="searchBtn" class="btn btn-primary">검색</button></td>
+              		</tr>
+              	</table>
+              </div>
+              
+              <div>
+              	<table class="table table-bordered table-hover" id="dataList">
                         <thead>
                             <tr>
                                 <th>번호</th>
@@ -36,7 +47,7 @@
                         </thead>
                         <tbody>
                             <c:forEach items="${BOARDLIST }" var="item">
-                                <tr onclick="trClick(`${item.idx}`);">
+                                <tr onclick="trClick(`${item.idx }`);">
                                     <td><c:out value="${item.idx }"></c:out></td>
                                     <td><c:out value="${item.title }"></c:out></td>
                                     <td><c:out value="${item.writerName }"></c:out></td>
@@ -83,12 +94,44 @@
 </body>
 
 <script type="text/javascript">
+
+	window.onload = function() {
+		var searchTitle = document.getElementById("searchTitle");
+		var searchBtn = document.getElementById("searchBtn");
+		
+		searchTitle.addEventListener("keydown", function(event){
+			if(event.keyCode === 13) {
+				searchBtn.click();
+			}
+		})
+		
+		searchBtn.onclick = function() {
+			
+// 			var tr = document.querySelectorAll("#dataList tbody tr");
+			
+// 			for(var item of tr) {
+// 				var title = item.getElementsByTagName('td')[1].innerHTML;
+				
+// 				if(title.includes(searchTitle.value)) {
+// 					item.style.display = "";
+// 				} else {
+// 					item.style.display = "none";
+// 				}
+// 			}
+
+			var url = "login.do";
+			url = url + "?title=" + searchTitle.value;
+			
+			location.href = url;
+
+		}
+	}
+
 	function trClick(idx) {
 		var url = "boardInfoPage=" + idx + ".do";
 		
 		location.href = url;
 	}
-	
 	 
 	// 이전 버튼 이벤트
 	function fn_prev(page, range, rangeSize) {
@@ -98,6 +141,7 @@
 		var url = "login.do";
 		url = url + "?page=" + page;
 		url = url + "&range=" + range;
+		url = url + "&title=" + searchTitle.value;
 		
 		location.href = url;
 	}
@@ -108,6 +152,7 @@
 		
 		url = url + "?page=" + page;
 		url = url + "&range=" + range;
+		url = url + "&title=" + searchTitle.value;
 		
 		location.href = url;
 	}
@@ -120,6 +165,7 @@
 		var url = "login.do";
 		url = url + "?page=" + page;
 		url = url + "&range=" + range;
+		url = url + "&title=" + searchTitle.value;
 		
 		location.href = url;
 	}

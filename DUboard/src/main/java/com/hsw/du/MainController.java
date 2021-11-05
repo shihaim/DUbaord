@@ -41,19 +41,22 @@ public class MainController {
 			HttpSession session, 
 			UserVO user,
 			@RequestParam(required = false, defaultValue = "1") int page,
-			@RequestParam(required = false, defaultValue = "1") int range
+			@RequestParam(required = false, defaultValue = "1") int range,
+			@RequestParam(required = false, defaultValue = "") String title
 	) throws IOException{
 		if(session.getAttribute("USER") == null) {
 			if(userService.loginProcess(request, user)) {
 				ModelAndView mav = new ModelAndView("login");
 				
-				int listCnt = boardService.selectBoardListCnt();
+				int listCnt = boardService.selectBoardListCnt(title);
 				Pagination pagination = new Pagination();
 				pagination.pageInfo(page, range, listCnt);
 				mav.addObject("PAGINATION", pagination);
 				
-				List<BoardVO> boardList = boardService.selectBoardList(pagination);
+				List<BoardVO> boardList = boardService.selectBoardList(pagination, title);
 				mav.addObject("BOARDLIST", boardList);
+				
+				mav.addObject("title", title);
 				
 				return mav;
 			} else {
@@ -67,14 +70,15 @@ public class MainController {
 			//redirect는 명령이 들어오면 웹 브라우저에게 다른 페이지로 이동하라는 명령을 내리기 떄문에 사실상 새로운 주소로 보내진다고 봐야한다. 그러므로 재요청을 할 수 있도록 구현을 해줘야 함.
 			ModelAndView mav = new ModelAndView("login");
 			
-			int listCnt = boardService.selectBoardListCnt();
+			int listCnt = boardService.selectBoardListCnt(title);
 			Pagination pagination = new Pagination();
 			pagination.pageInfo(page, range, listCnt);
 			mav.addObject("PAGINATION", pagination);
 			
-			List<BoardVO> boardList = boardService.selectBoardList(pagination);
+			List<BoardVO> boardList = boardService.selectBoardList(pagination, title);
 			mav.addObject("BOARDLIST", boardList);
 			
+			mav.addObject("title", title);
 			
 			return mav;
 		}

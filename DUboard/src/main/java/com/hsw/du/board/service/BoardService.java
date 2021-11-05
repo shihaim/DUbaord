@@ -10,7 +10,7 @@ import com.hsw.du.common.Pagination;
 
 public interface BoardService {
 	
-	public List<BoardVO> selectBoardList(Pagination pagination);
+	public List<BoardVO> selectBoardList(Pagination pagination, String title);
 	
 	public BoardVO selectBoard(long idx);
 	
@@ -24,6 +24,6 @@ public interface BoardService {
 	
 	public void deleteBoardAttFile(BoardAttFileVO criteria) throws Exception;
 	
-	public int selectBoardListCnt();
+	public int selectBoardListCnt(String title);
 
 }
